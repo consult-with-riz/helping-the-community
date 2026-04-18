@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canva AI 2.0 — Full Capability Breakdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #EA6A47;
+    --coral-light: #f08060;
+    --coral-pale: #fdf0eb;
+    --cream: #F5EFE0;
+    --cream-dark: #ede4ce;
+    --charcoal: #4A4A4A;
+    --charcoal-dark: #2e2e2e;
+    --charcoal-light: #767676;
+    --white: #ffffff;
+    --off-white: #fafaf8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--charcoal-dark);
+    padding: 100px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: var(--coral);
+    opacity: 0.08;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 10%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: var(--cream);
+    opacity: 0.05;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    display: inline-block;
+    background: var(--coral);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 82px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 span {
+    color: var(--coral);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .hero-meta {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.5px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px;
+  }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--cream);
+    padding: 40px 60px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .toc-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .toc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 16px;
+  }
+
+  .toc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .toc-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    text-decoration: none;
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+
+  .toc-links a:hover {
+    background: var(--coral);
+    color: var(--white);
+    border-color: var(--coral);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 60px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    margin-top: 80px;
+  }
+
+  .section-header:first-child { margin-top: 0; }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--cream-dark);
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--charcoal-dark);
+    white-space: nowrap;
+  }
+
+  /* ── OVERVIEW ── */
+  .overview-text {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 20px;
+  }
+
+  /* ── CAPABILITY CARD ── */
+  .capability-card {
+    background: var(--white);
+    border: 1px solid #e8e4db;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .capability-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 32px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--cream-dark);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .card-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--coral);
+    line-height: 1;
+    min-width: 52px;
+  }
+
+  .card-title-block { flex: 1; }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal-dark);
+    margin-bottom: 4px;
+  }
+
+  .card-tagline {
+    font-size: 13px;
+    color: var(--charcoal-light);
+    font-weight: 400;
+  }
+
+  .card-toggle {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    color: var(--coral);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .card-body {
+    display: none;
+    padding: 32px;
+  }
+
+  .card-body.open { display: block; }
+
+  .card-toggle.open { transform: rotate(45deg); }
+
+  .card-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 10px;
+    margin-top: 28px;
+  }
+
+  .card-section-label:first-child { margin-top: 0; }
+
+  .card-body p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+  }
+
+  .card-body ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 12px;
+  }
+
+  .card-body ul li {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--charcoal);
+    padding: 6px 0 6px 20px;
+    position: relative;
+    border-bottom: 1px solid var(--off-white);
+  }
+
+  .card-body ul li:last-child { border-bottom: none; }
+
+  .card-body ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--coral);
+    font-size: 12px;
+    top: 8px;
+  }
+
+  .try-box {
+    background: var(--cream);
+    border-left: 3px solid var(--coral);
+    padding: 18px 20px;
+    border-radius: 0 4px 4px 0;
+    margin-top: 20px;
+  }
+
+  .try-box-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 8px;
+  }
+
+  .try-box p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--charcoal);
+    margin: 0;
+  }
+
+  /* ── HOW IT CONNECTS ── */
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 32px;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .flow-step.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .flow-step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--coral);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .flow-line {
+    width: 1px;
+    flex: 1;
+    min-height: 32px;
+    background: var(--cream-dark);
+    margin: 4px 0;
+  }
+
+  .flow-step:last-child .flow-line { display: none; }
+
+  .flow-content {
+    background: var(--white);
+    border: 1px solid #e8e4db;
+    border-radius: 4px;
+    padding: 18px 22px;
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .flow-content strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--coral);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .flow-content p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--charcoal);
+    margin: 0;
+  }
+
+  /* ── ADDITIONAL FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .feature-group {
+    background: var(--white);
+    border: 1px solid #e8e4db;
+    border-radius: 4px;
+    padding: 24px;
+  }
+
+  .feature-group h4 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .feature-group ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-group ul li {
+    font-size: 14px;
+    color: var(--charcoal);
+    padding: 5px 0 5px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .feature-group ul li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--coral);
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--charcoal-dark);
+    padding: 48px 60px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+
+  .footer p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .hero, .toc, .content { padding-left: 24px; padding-right: 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Canva Create 2026</div>
+    <h1>Canva <span>AI 2.0</span><br>Breakdown</h1>
+    <p class="hero-sub">Full capability breakdown and workflow impact — based on the Canva Create 2026 Keynote.</p>
+    <div class="hero-meta">Prepared by Soch &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; withsoch.com</div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <div class="toc-inner">
+    <div class="toc-label">Jump to</div>
+    <div class="toc-links">
+      <a href="#overview">Overview</a>
+      <a href="#capabilities">9 Capabilities</a>
+      <a href="#connects">How It Connects</a>
+      <a href="#additional">Additional Features</a>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="content">
+
+  <!-- OVERVIEW -->
+  <div id="overview">
+    <div class="section-header">
+      <h2>Overview</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="overview-text">Canva AI 2.0 is Canva's largest product launch to date. It transforms the platform from a design tool into a full creative operating system — one that can research, plan, generate, brand-apply, schedule, and publish, all from a single conversation inside the tools you already use.</p>
+    <p class="overview-text">The nine capabilities below don't operate in isolation. They're designed to work together — each one removing a different bottleneck in the creation process.</p>
+  </div>
+
+  <!-- 9 CAPABILITIES -->
+  <div id="capabilities">
+    <div class="section-header">
+      <h2>The 9 Capabilities</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- Cards -->
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">01</div>
+        <div class="card-title-block">
+          <div class="card-title">Conversational Design</div>
+          <div class="card-tagline">Design by describing your goal in plain language</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>The ability to design through plain language. You describe what you want to create — your goal, your audience, your rough idea — and Canva AI generates it. No blank page. No template search. No drag-and-drop from scratch.</p>
+        <div class="card-section-label">How it works</div>
+        <p>You type a prompt on the Canva homepage or inside any existing design. Canva AI interprets your intent, selects appropriate layouts, elements, and copy, and builds a first draft. You continue the conversation to refine it.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Removes the blank page problem entirely — first drafts start from a prompt, not a template</li>
+          <li>Non-designers on your team can self-serve on simple deliverables without briefing a designer</li>
+          <li>Design iteration moves from click-by-click editing to natural conversation</li>
+          <li>Works across all formats: social posts, presentations, documents, whiteboards</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Open Canva and type: "Create an Instagram post announcing [your product/event] for [your audience]." Watch the first draft. Then prompt: "Make the headline more direct" or "Swap the background for something minimal." Stay in conversation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">02</div>
+        <div class="card-title-block">
+          <div class="card-title">Agentic Orchestration</div>
+          <div class="card-tagline">AI takes actions on your behalf — decides, selects, executes</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>Canva AI can now take actions on your behalf — not just generate, but decide, select, and execute. It picks fonts, colours, layouts, and copy. It can start a new design from scratch or step into one you're already working on.</p>
+        <div class="card-section-label">How it works</div>
+        <p>When you give Canva AI a goal, it acts like a creative director with execution ability — makes design decisions, pulls assets from the Canva library, applies brand settings, and iterates. You can interrupt at any point to redirect it.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>First drafts require less human setup — AI makes the initial design decisions</li>
+          <li>Mid-project, hand off specific tasks without starting over</li>
+          <li>Reduces back-and-forth between brief and execution — AI holds the brief in context</li>
+          <li>Frees designers to focus on judgment and refinement, not production mechanics</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Open an existing design you're halfway through. Prompt: "This deck needs a stronger visual hierarchy. Rework the layout of slides 3 to 6." Let it execute. Review and redirect from there.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">03</div>
+        <div class="card-title-block">
+          <div class="card-title">Memory Library</div>
+          <div class="card-tagline">A personalised context layer that learns how you work</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>A personalised context layer that Canva AI builds from your existing designs, preferences, and working style. The first entry is your "About Me" — a Canva Doc generated by analysing your design history. It updates continuously as you work.</p>
+        <div class="card-section-label">How it works</div>
+        <p>On first use, Canva AI scans your existing designs and creates an About Me profile. Over time, you add more entries: goals, preferences, a knowledge base, and shared memory with collaborators.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Every new design starts with more context — less re-briefing the AI each time</li>
+          <li>Your style and preferences carry forward automatically across projects</li>
+          <li>Shared Memory means the AI can hold team context, not just individual context</li>
+          <li>The Knowledge Base lets you inject brand or product knowledge the AI doesn't have natively</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Activate your About Me from the Canva homepage. Review what it generated. Add anything it missed — your industry, your typical audience, your design preferences. This is the context every future generation will pull from.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">04</div>
+        <div class="card-title-block">
+          <div class="card-title">Layered Object Intelligence</div>
+          <div class="card-tagline">Every AI output is a fully editable, layered Canva file</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>Every design Canva AI generates is fully layered and editable. Not a flattened image. Not a locked group. A proper, structured Canva file where every element — text, image, shape, icon — is individually selectable and editable.</p>
+        <div class="card-section-label">How it works</div>
+        <p>Powered by Canva's in-house Design Model. When you open an AI-generated file, you see the same editable layers you'd get if you'd built it manually. Move, resize, restyle, or replace any element directly.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>AI outputs are actual working files, not starting points that need to be rebuilt</li>
+          <li>Designers can take AI-generated drafts and refine them without starting from scratch</li>
+          <li>Element-level control means you override specific parts, not the whole design</li>
+          <li>Connects to the full Canva toolkit: animations, brand assets, effects all work on AI-generated layers</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Generate a design via prompt. Then open it and click into individual elements. Try moving the headline. Try swapping the background image. Confirm you have full layer access. This is your new baseline.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">05</div>
+        <div class="card-title-block">
+          <div class="card-title">Connectors</div>
+          <div class="card-tagline">Slack, Gmail, Google Drive, Calendar — all feed into designs</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>Direct integrations with the tools where your information already lives. Canva AI reads from these sources and uses the context to generate and populate designs without you having to manually move information across.</p>
+        <div class="card-section-label">How it works</div>
+        <p>Connect your apps once in Canva settings. When you prompt a design, reference these sources: "Pull the latest updates from Slack and populate this newsletter template." Canva AI reads, extracts, and builds. Bi-directional connection is coming — designs will push context back to Slack and other tools.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Eliminates the copy-paste loop between your comms tools and your design tool</li>
+          <li>Brief-to-design pipelines become much shorter — Slack thread to formatted post in one prompt</li>
+          <li>Context from live conversations feeds directly into content, keeping it current</li>
+          <li>Meeting notes, project updates, and announcements can auto-populate recurring templates</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Connect Slack and Gmail in Canva settings. Then prompt: "Create a summary post of this week's team updates from Slack, using this brand template." This is your new weekly content workflow.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">06</div>
+        <div class="card-title-block">
+          <div class="card-title">Scheduling</div>
+          <div class="card-tagline">Recurring work runs automatically — even while you're offline</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>The ability to set tasks to run automatically on a defined cadence — even when you're offline. Canva AI executes the work on schedule and has it ready when you return.</p>
+        <div class="card-section-label">How it works</div>
+        <p>After building a workflow, you set a schedule: daily, weekly, monthly. Canva AI runs the workflow, generates the output, and queues it for your review. Pairs with Connectors to pull fresh data each cycle.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Recurring content — social posts, newsletters, internal updates — moves from manual to automated</li>
+          <li>Work doesn't stop when you stop — overnight research, Monday-morning content drops run without you</li>
+          <li>Reduces the cognitive load of remembering to produce recurring deliverables</li>
+          <li>Pairs with Connectors: automated workflows that pull from live sources and generate fresh content</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Identify one recurring piece of content in your workflow — a weekly post, monthly newsletter, regular report. Build it once in Canva AI with Connectors active. Schedule it. Let it run once without you and review the output.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">07</div>
+        <div class="card-title-block">
+          <div class="card-title">Web Research</div>
+          <div class="card-tagline">Research happens inside the design, not in another tab</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>Canva AI can search the web and pull relevant information directly into your design — in context, without switching tabs. No more research phase separate from the design phase.</p>
+        <div class="card-section-label">How it works</div>
+        <p>Within a design workflow, prompt Canva AI to research a topic, a client, a market, or a news event. It queries the web, synthesises results, and injects relevant information into the appropriate part of your design. Research doesn't break the creative flow.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Research and design happen in the same conversation — no more tab-switching mid-build</li>
+          <li>Client-facing materials can be refreshed with current data on demand</li>
+          <li>Pitch decks, reports, and proposals can include live, sourced information without manual lookup</li>
+          <li>Reduces the time between "I need to check something" and "it's in the design"</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Build a pitch deck for a real client. At the relevant slide, prompt: "Find [client]'s latest news and add a summary to this slide." Then: "Check for any recent industry developments that affect this pitch." This replaces your pre-meeting research sprint.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">08</div>
+        <div class="card-title-block">
+          <div class="card-title">Brand Intelligence</div>
+          <div class="card-tagline">On-brand by default — from the very first draft</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>Canva AI automatically applies your Brand Kit to every design it generates — from the first draft. Correct fonts, correct colours, correct logo, correct assets. On-brand by default, not by revision.</p>
+        <div class="card-section-label">How it works</div>
+        <p>Set up your Brand Kit in Canva. When Brand Intelligence is active, every AI generation starts from that kit. Select a Brand Template and the AI populates it on-brand. Charts and new additions auto-match the established palette. Affinity (now free for all Canva users) assets can be pushed directly into Brand Kits.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>First drafts are on-brand — the feedback loop of "wrong fonts, wrong colours" disappears</li>
+          <li>Non-designers can generate content without breaking visual standards</li>
+          <li>Brand consistency scales across a team without designer oversight on every output</li>
+          <li>Affinity integration means high-fidelity brand assets flow into templates seamlessly</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Audit your current Canva Brand Kit. Make sure it's complete: primary and secondary fonts, full colour palette, logo variations, and at least one Brand Template per content type you produce regularly. Brand Intelligence is only as strong as what you put in.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="capability-card">
+      <div class="card-header" onclick="toggleCard(this)">
+        <div class="card-number">09</div>
+        <div class="card-title-block">
+          <div class="card-title">Canva Code 2.0</div>
+          <div class="card-tagline">Interactive HTML tools and microsites — no coding required</div>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <div class="card-section-label">What it is</div>
+        <p>The ability to import, edit, and create HTML and interactive code inside Canva — without writing code. AI-generated HTML files become drag-and-drop editable. Interactive elements can be built by prompt and published directly to a domain.</p>
+        <div class="card-section-label">How it works</div>
+        <p>Built in collaboration with Anthropic and OpenAI. Import any HTML file into Canva — it becomes editable in the drag-and-drop editor. Build interactive elements from scratch by describing them: RSVP forms, polls, countdowns. Form responses feed into a connected Canva Sheet. Publish to your own domain in one click.</p>
+        <div class="card-section-label">Workflow impact</div>
+        <ul>
+          <li>Microsites, landing pages, and interactive tools are now inside your design workflow — no developer required</li>
+          <li>HTML imports mean AI-generated code from external tools can be refined inside Canva without rebuilding</li>
+          <li>Form + Sheet integration creates a light data collection pipeline without third-party tools</li>
+          <li>Interactive presentations, audience polls, and event tools can be built and published without leaving Canva</li>
+        </ul>
+        <div class="try-box">
+          <div class="try-box-label">Try this</div>
+          <p>Describe a simple interactive element you currently use a separate tool for — a contact form, an event RSVP, a quick poll. Prompt Canva Code 2.0 to build it. Publish it to a domain and test the Sheet integration.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /capabilities -->
+
+  <!-- HOW IT CONNECTS -->
+  <div id="connects">
+    <div class="section-header">
+      <h2>How It All Connects</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="overview-text">These nine capabilities are designed to work as a system. Here is how they compound in a real workflow:</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">1</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Connectors</strong><p>Pull context from Slack, Gmail, or Drive — so the AI knows what it's working with before it generates anything.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">2</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Conversational Design + Agentic Orchestration</strong><p>Turn that context into a first draft — layered, structured, ready to edit.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">3</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Brand Intelligence</strong><p>Applies your Brand Kit from the first generation — no manual correction needed.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">4</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Web Research</strong><p>Fills in any gaps — client data, market context, current news — without leaving the design.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">5</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Layered Object Intelligence</strong><p>Means the output is a real editable file — every element accessible and modifiable.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">6</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Memory Library</strong><p>Holds your preferences and style — so every subsequent generation starts smarter.</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-left"><div class="flow-dot">7</div><div class="flow-line"></div></div>
+        <div class="flow-content"><strong>Scheduling</strong><p>Runs the whole workflow on repeat — weekly, monthly, automatically — while you focus on other things.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADDITIONAL FEATURES -->
+  <div id="additional">
+    <div class="section-header">
+      <h2>Additional Features</h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="overview-text">Beyond the nine core capabilities, the following updates were announced as part of the broader Canva Create 2026 release:</p>
+
+    <div class="features-grid">
+      <div class="feature-group">
+        <h4>Design & Editing</h4>
+        <ul>
+          <li>Image enhancement — upscale low-res images</li>
+          <li>Photo editing panel redesign</li>
+          <li>Visual effects for stickers and shapes</li>
+          <li>3D elements with style, rotate, recolour</li>
+          <li>AI video effects and style match</li>
+          <li>Easier editing of grouped elements</li>
+          <li>Colour themes across designs</li>
+          <li>Source component updates everywhere</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <h4>Content & Video</h4>
+        <ul>
+          <li>New caption styles for video content</li>
+          <li>Video building blocks with effects and sound</li>
+          <li>Magic Video 2.0 — 10 additional languages</li>
+          <li>Music and sound effects generator</li>
+          <li>Turn photos into videos</li>
+          <li>Custom prompts with presenter notes in Magic Write</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <h4>Publishing & Distribution</h4>
+        <ul>
+          <li>Print directly from Canva — no download required</li>
+          <li>Export designs into Outlook</li>
+          <li>Publish to Facebook app</li>
+          <li>TikTok Ad Platform integration</li>
+          <li>Shorter shareable links</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <h4>Integrations</h4>
+        <ul>
+          <li>Mailchimp integration</li>
+          <li>HubSpot for Canva app</li>
+          <li>Constant Contact app integration</li>
+          <li>Clay integration</li>
+          <li>Flodesk integration</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <h4>Productivity</h4>
+        <ul>
+          <li>Personal Brand Kit creation</li>
+          <li>Chart generator and form generator</li>
+          <li>Select and style chart text elements</li>
+          <li>Sorting data tools</li>
+        </ul>
+      </div>
+      <div class="feature-group">
+        <h4>Platform</h4>
+        <ul>
+          <li>Canva Offline — design without internet</li>
+          <li>Canva Print Shop — built-in print store</li>
+          <li>Learn Grid — education resource library</li>
+          <li>Affinity now free for all Canva users</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">Soch</div>
+  <p>withsoch.com &nbsp;·&nbsp; Operations-as-a-Service &nbsp;·&nbsp; April 2026</p>
+</div>
+
+<script>
+  function toggleCard(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.card-toggle');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    toggle.classList.toggle('open', !isOpen);
+  }
+
+  // Intersection observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.capability-card, .flow-step').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
